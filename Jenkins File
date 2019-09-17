@@ -48,7 +48,9 @@ agent {
  
 node {
  
-customWorkspace “$azureWebAppPublish appName: '', azureCredentialsId: 'Azure', dockerImageName: '', dockerImageTag: '', dockerRegistryEndpoint: [], filePath: '', publishType: 'file', resourceGroup: 'Jenkins', slotName: '', sourceDirectory: '', targetDirectory: ''”
+customWorkspace “$withCredentials([azureServicePrincipal('my service principal')]) {
+  sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+}”
  
 label “$jenkins_node_label”
  
